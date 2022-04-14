@@ -41,13 +41,14 @@ public class TeamEntity implements Serializable {
 	/**
 	 * year
 	 */
+	//YEAR_TEAM because YEAR it's already taken by H2
 	@Column(name="YEAR_TEAM", nullable=false)
 	private long year;
 	
 	/**
 	 * Players of the team
 	 */
-	
+	//We can choose ManyToMany if we want to keep player to other Team in an other year
 	@OneToMany(mappedBy="teamPlayer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<PlayerEntity> players;
 
