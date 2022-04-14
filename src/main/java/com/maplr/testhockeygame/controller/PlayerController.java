@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maplr.testhockeygame.dto.PlayerDto;
+import com.maplr.testhockeygame.dto.PlayerWithoutTeamDto;
 import com.maplr.testhockeygame.service.PlayerService;
 
 @RestController
@@ -29,10 +29,16 @@ public class PlayerController {
 	@Autowired
 	private PlayerService playerService;
 	
+	/**
+	 * Update captain
+	 * 
+	 * @param id: id player
+	 * @return PlayerWithoutTeamDto
+	 */
 	@PutMapping(value="/captain/{id}", produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<PlayerDto> updatePlayer(@PathVariable("id") Integer id) {
+	public ResponseEntity<PlayerWithoutTeamDto> updatePlayer(@PathVariable("id") Integer id) {
 		logger.info(REST_API_PLAYER_CONTROLLER + "- updating player ...");
-		PlayerDto playerDtoResult = new PlayerDto();
+		PlayerWithoutTeamDto playerDtoResult = new PlayerWithoutTeamDto();
 		try {
 			if(id != null) {
 				playerDtoResult = playerService.updatePlayer(id);

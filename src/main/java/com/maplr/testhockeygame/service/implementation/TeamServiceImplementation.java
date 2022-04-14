@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.maplr.testhockeygame.dto.PlayerDto;
-import com.maplr.testhockeygame.dto.PlayerSaveDto;
+import com.maplr.testhockeygame.dto.PlayerWithoutTeamDto;
 import com.maplr.testhockeygame.dto.TeamDto;
+import com.maplr.testhockeygame.dto.TeamGetByYearDto;
 import com.maplr.testhockeygame.entity.PlayerEntity;
 import com.maplr.testhockeygame.entity.TeamEntity;
 import com.maplr.testhockeygame.mapper.PlayerEntityDtoMapper;
@@ -34,23 +35,35 @@ public class TeamServiceImplementation implements TeamService {
 		teamMapper = Mappers.getMapper(TeamEntityDtoMapper.class);
 		playerMapper = Mappers.getMapper(PlayerEntityDtoMapper.class);
 	}
-		
+	
+	/**
+	 * get team by year
+	 * 
+	 * @param year: year's team
+	 * @return TeamGetByYearDto 
+	 */
 	@Override
-	public TeamDto getTeamByYear(Long year) {
+	public TeamGetByYearDto getTeamByYear(Long year) {
 		TeamEntity teamEntity = teamRepository.findByYear(year);
 		
-		 return teamMapper.teamEntityToTeamDto(teamEntity);
+		 return teamMapper.teamEntityToTeamGetByYearDto(teamEntity);
 	}
 
-	
+	/**
+	 * Save player to team By Year
+	 * 
+	 * @param year: year's team
+	 * @param playerDto: player to add
+	 * @return PlayerWithoutTeamDto
+	 */
 	@Override
-	public PlayerSaveDto saveTeam(Long year, PlayerDto playerDto) {
+	public PlayerWithoutTeamDto saveTeam(Long year, PlayerDto playerDto) {
 		TeamEntity teamEntity = teamRepository.findByYear(year);
 		TeamDto teamDto = teamEntity != null ? teamMapper.teamEntityToTeamDto(teamEntity): new TeamDto();
 		playerDto.setTeamDto(teamDto);
 		PlayerEntity playerEntity = playerMapper.playersDtoToEntity(playerDto);
 		playerRepository.save(playerEntity);
-		return playerMapper.playersWithoutTeamEntityToDto(playerEntity);
+		return playerMapper.playersToPlayerWithoutTeamDto(playerEntity);
 	}
 
 	

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maplr.testhockeygame.dto.PlayerDto;
-import com.maplr.testhockeygame.dto.PlayerSaveDto;
-import com.maplr.testhockeygame.dto.TeamDto;
+import com.maplr.testhockeygame.dto.PlayerWithoutTeamDto;
+import com.maplr.testhockeygame.dto.TeamGetByYearDto;
 import com.maplr.testhockeygame.service.TeamService;
 
 @RestController
@@ -35,15 +35,15 @@ public class TeamController {
 	private TeamService teamService;
 	
 	/**
-	 * get all team by year
+	 * get team by year
 	 * 
 	 * @param year: year's team
-	 * @return list of teamDto
+	 * @return TeamGetByYearDto 
 	 */
 	@GetMapping(value="/{year}", produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<TeamDto> getAllTeamByYear(@PathVariable("year") Long year) {
+	public ResponseEntity<TeamGetByYearDto> getTeamByYear(@PathVariable("year") Long year) {
 		logger.info(REST_API_TEAM_CONTROLLER + "- getAllTeamByYear ...");
-		TeamDto teamDto = new TeamDto();
+		TeamGetByYearDto teamDto = new TeamGetByYearDto();
 		try {
 			if(year != null) {
 				teamDto = teamService.getTeamByYear(year);
@@ -56,10 +56,17 @@ public class TeamController {
 		return new ResponseEntity<>(teamDto, HttpStatus.OK);
 	}
 	
+	/**
+	 * Save player to team By Year
+	 * 
+	 * @param year: year's team
+	 * @param playerDto: player to add
+	 * @return PlayerWithoutTeamDto
+	 */
 	@PostMapping(value="/{year}", produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<PlayerSaveDto> saveTeam(@PathVariable("year") Long year, @RequestBody PlayerDto playerDto) {
+	public ResponseEntity<PlayerWithoutTeamDto> saveTeam(@PathVariable("year") Long year, @RequestBody PlayerDto playerDto) {
 		logger.info(REST_API_TEAM_CONTROLLER + "- save TeamDto ...");
-		PlayerSaveDto playerDtoResult = new PlayerSaveDto();
+		PlayerWithoutTeamDto playerDtoResult = new PlayerWithoutTeamDto();
 		try {
 			if(year != null && playerDto != null) {
 				playerDtoResult = teamService.saveTeam(year, playerDto);

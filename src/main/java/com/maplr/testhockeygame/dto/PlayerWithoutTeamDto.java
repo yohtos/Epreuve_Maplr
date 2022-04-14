@@ -1,11 +1,7 @@
 package com.maplr.testhockeygame.dto;
 
-public class PlayerSaveDto {
+public class PlayerWithoutTeamDto {
 
-	/**
-	 * id player
-	 */
-	private Integer id;
 	/**
 	 * Number
 	 */
@@ -30,14 +26,6 @@ public class PlayerSaveDto {
 	 * Is captain
 	 */
 	private boolean isCaptain;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public long getNumber() {
 		return number;

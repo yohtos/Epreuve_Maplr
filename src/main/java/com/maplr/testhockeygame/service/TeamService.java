@@ -1,12 +1,12 @@
 package com.maplr.testhockeygame.service;
 
 import com.maplr.testhockeygame.dto.PlayerDto;
-import com.maplr.testhockeygame.dto.PlayerSaveDto;
-import com.maplr.testhockeygame.dto.TeamDto;
+import com.maplr.testhockeygame.dto.PlayerWithoutTeamDto;
+import com.maplr.testhockeygame.dto.TeamGetByYearDto;
 
 public interface TeamService {
 	
-	public TeamDto getTeamByYear(Long year);
+	public TeamGetByYearDto getTeamByYear(Long year);
 
-	public PlayerSaveDto saveTeam(Long year, PlayerDto playerDto);
+	public PlayerWithoutTeamDto saveTeam(Long year, PlayerDto playerDto);
 }

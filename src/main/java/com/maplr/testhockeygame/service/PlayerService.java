@@ -1,8 +1,8 @@
 package com.maplr.testhockeygame.service;
 
-import com.maplr.testhockeygame.dto.PlayerDto;
+import com.maplr.testhockeygame.dto.PlayerWithoutTeamDto;
 
 public interface PlayerService {
 
-	public PlayerDto updatePlayer(Integer id);
+	public PlayerWithoutTeamDto updatePlayer(Integer id);
 }
