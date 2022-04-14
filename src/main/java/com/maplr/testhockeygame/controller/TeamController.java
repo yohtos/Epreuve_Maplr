@@ -1,8 +1,5 @@
 package com.maplr.testhockeygame.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ws.rs.core.MediaType;
 
 import org.hibernate.service.spi.ServiceException;
@@ -36,11 +33,6 @@ public class TeamController {
 	
 	@Autowired
 	private TeamService teamService;
-
-	@GetMapping("/")
-	public List<TeamDto> getAllTeam() {
-		return teamService.getAllTeam();
-	}
 	
 	/**
 	 * get all team by year
@@ -49,19 +41,19 @@ public class TeamController {
 	 * @return list of teamDto
 	 */
 	@GetMapping(value="/{year}", produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<List<TeamDto>> getAllTeamByYear(@PathVariable("year") Long year) {
+	public ResponseEntity<TeamDto> getAllTeamByYear(@PathVariable("year") Long year) {
 		logger.info(REST_API_TEAM_CONTROLLER + "- getAllTeamByYear ...");
-		List<TeamDto> teamDtoList = new ArrayList<>();
+		TeamDto teamDto = new TeamDto();
 		try {
 			if(year != null) {
-				teamDtoList = teamService.getAllTeamByYear(year);
+				teamDto = teamService.getTeamByYear(year);
 			}
 		}catch (Exception e) {
 			String message = REST_API_TEAM_CONTROLLER_ERROR + e.getMessage();
 			logger.error(message);
 			throw new ServiceException(REST_API_TEAM_CONTROLLER_ERROR);
 		}
-		return new ResponseEntity<>(teamDtoList, HttpStatus.OK);
+		return new ResponseEntity<>(teamDto, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/{year}", produces = MediaType.APPLICATION_JSON)

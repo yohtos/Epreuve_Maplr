@@ -4,5 +4,5 @@ import com.maplr.testhockeygame.dto.PlayerDto;
 
 public interface PlayerService {
 
-	public PlayerDto updatePlayer(Integer id, PlayerDto playerDto);
+	public PlayerDto updatePlayer(Integer id);
 }

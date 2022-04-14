@@ -25,21 +25,9 @@ public class PlayerServiceImplementation implements PlayerService {
 		mapper = Mappers.getMapper(PlayerEntityDtoMapper.class);
 	}
 	
-	public PlayerDto updatePlayer(Integer id, PlayerDto playerDto) {
+	public PlayerDto updatePlayer(Integer id) {
 		PlayerEntity playerEntity = repository.findByIdPlayer(id);
-		if(!playerDto.getLastName().equalsIgnoreCase(playerEntity.getLastName())) {
-			playerEntity.setLastName(playerDto.getLastName());
-		}
-		if(!playerDto.getName().equalsIgnoreCase(playerEntity.getName())) {
-			playerEntity.setName(playerDto.getName());
-		}
-		if(playerDto.getNumber() != playerEntity.getNumber()) {
-			playerEntity.setNumber(playerDto.getNumber());
-		}
-		if(!playerDto.getPosition().equalsIgnoreCase(playerEntity.getPosition())) {
-			playerEntity.setPosition(playerDto.getPosition());
-		}
-		playerEntity.setIsCaptain(playerDto.getIsCaptain());
+		playerEntity.setIsCaptain(true);
 		repository.save(playerEntity);
 		return mapper.playersEntityToDto(playerEntity);
 	}

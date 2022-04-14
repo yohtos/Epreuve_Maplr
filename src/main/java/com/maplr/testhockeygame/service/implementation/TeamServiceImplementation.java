@@ -1,8 +1,5 @@
 package com.maplr.testhockeygame.service.implementation;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.annotation.PostConstruct;
 
 import org.mapstruct.factory.Mappers;
@@ -37,26 +34,19 @@ public class TeamServiceImplementation implements TeamService {
 		teamMapper = Mappers.getMapper(TeamEntityDtoMapper.class);
 		playerMapper = Mappers.getMapper(PlayerEntityDtoMapper.class);
 	}
-	
-	@Override
-	public List<TeamDto> getAllTeam() {
-		List<TeamEntity> listTeamEntities = teamRepository.findAll();
 		
-		 return listTeamEntities.stream().map(teamEntity -> teamMapper.teamEntityToTeamDto(teamEntity)).collect(Collectors.toList());
-	}
-	
 	@Override
-	public List<TeamDto> getAllTeamByYear(Long year) {
-		List<TeamEntity> listTeamEntities = teamRepository.findAllByYear(year);
+	public TeamDto getTeamByYear(Long year) {
+		TeamEntity teamEntity = teamRepository.findByYear(year);
 		
-		 return listTeamEntities.stream().map(teamEntity -> teamMapper.teamEntityToTeamDto(teamEntity)).collect(Collectors.toList());
+		 return teamMapper.teamEntityToTeamDto(teamEntity);
 	}
 
 	
 	@Override
 	public PlayerSaveDto saveTeam(Long year, PlayerDto playerDto) {
-		List<TeamEntity> listTeamEntities = teamRepository.findAllByYear(year);
-		TeamDto teamDto = listTeamEntities != null && !listTeamEntities.isEmpty() ? teamMapper.teamEntityToTeamDto(listTeamEntities.get(0)): new TeamDto();
+		TeamEntity teamEntity = teamRepository.findByYear(year);
+		TeamDto teamDto = teamEntity != null ? teamMapper.teamEntityToTeamDto(teamEntity): new TeamDto();
 		playerDto.setTeamDto(teamDto);
 		PlayerEntity playerEntity = playerMapper.playersDtoToEntity(playerDto);
 		playerRepository.save(playerEntity);
